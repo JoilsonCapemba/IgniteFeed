@@ -4,10 +4,27 @@ import { Avatar } from './Avatar'
 
 import { format, formatDistance, formatDistanceToNow, formatRelative, subDays } from 'date-fns'
 import ptBr from 'date-fns/locale/pt-BR'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
+
+interface Author{
+  avatarUrl: string,
+  name: string,
+  role: string,
+}
+
+interface Content{
+  type: string,
+  content: string
+}
+
+interface PostProps{
+  author: Author,
+  content: Content[],
+  publishedAt: Date
+}
 
 
-export function Post({author, publishedAt, content}){
+export function Post({author, publishedAt, content}: PostProps){
 
   const [comments, setComments] = useState(['First coment']);
   const [newCommenttext, setNewCommenttext] = useState('')
@@ -19,17 +36,17 @@ export function Post({author, publishedAt, content}){
     addSuffix: true,
   })
 
-  function handleCreatenewComment(){
+  function handleCreatenewComment(event: FormEvent){
     event.preventDefault() //usado para nao direcionar o evento noutra pagina
     setComments([...comments, newCommenttext])
     setNewCommenttext('')
   }
 
-  function handleNewCommentChange(){
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>){
     setNewCommenttext(event.target.value)
   }
 
-  function deleteComment(commentToDelete){
+  function deleteComment(commentToDelete: string){
     const commentWithoutdeleteOne = comments.filter(comment => {
       return comment !== commentToDelete
     })
@@ -43,7 +60,7 @@ export function Post({author, publishedAt, content}){
     <article className={styles.post}>
       <header className={styles.headerPost}>
         <div className={styles.author}>
-          <Avatar hasBorder src={author.avatarUrl} alt="avatar" className={styles.avatar} />
+          <Avatar className={styles.avatar} hasBorder src={author.avatarUrl} alt="avatar" />
 
           <div className={styles.authorInfo}>
             <strong>{author.name}</strong>
