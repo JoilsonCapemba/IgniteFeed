@@ -37,6 +37,8 @@ export function Post({author, publishedAt, content}){
     setComments(commentWithoutdeleteOne)
   }
 
+  const isNewCommentEmpty = newCommenttext.length === 0
+
   return(
     <article className={styles.post}>
       <header className={styles.headerPost}>
@@ -72,7 +74,7 @@ export function Post({author, publishedAt, content}){
         />
 
         <footer>
-          <button type='submit'>Publicar</button>
+          <button type='submit' disabled={isNewCommentEmpty}>Publicar</button>
         </footer>
       </form>
 

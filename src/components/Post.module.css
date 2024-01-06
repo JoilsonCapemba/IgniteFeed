@@ -99,8 +99,13 @@ p{
   margin-top: 1rem;
 }
 
-.commentForm button[type=submit]:hover{
+.commentForm button[type=submit]:not(:disabled):hover{
   background: var(--green-300);
+}
+
+.commentForm button:disabled{
+  opacity: 0.3;
+  cursor: not-allowed
 }
 
 
